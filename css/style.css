@@ -1,0 +1,154 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+[hidden] { display: none !important; }
+
+:root {
+  --bg: #1e1f24;
+  --panel-bg: #26272e;
+  --line: #3a3b44;
+  --text: #e8e8ec;
+  --muted: #9a9ba4;
+  --disabled: #424246;
+  --accent: #5b8cff;
+}
+
+html, body { height: 100%; }
+body {
+  font-family: -apple-system, "Segoe UI", "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ---- 툴바 ---- */
+.toolbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--line);
+  background: var(--panel-bg);
+  flex: 0 0 auto;
+}
+.logo { font-weight: 700; font-size: 18px; letter-spacing: 0.5px; }
+.toolbar-actions { display: flex; align-items: center; gap: 10px; }
+.btn-download {
+  background: var(--accent); color: #fff; border: none;
+  padding: 8px 18px; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer;
+}
+.btn-download:hover { filter: brightness(1.08); }
+.btn-secondary {
+  background: #2f3038; color: var(--text); border: 1px solid var(--line);
+  padding: 8px 16px; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer;
+}
+.btn-secondary:hover { border-color: var(--accent); }
+
+/* ---- 워크스페이스 ---- */
+.workspace { flex: 1 1 auto; display: flex; min-height: 0; }
+
+.canvas-area {
+  flex: 1 1 auto; position: relative;
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px; min-width: 0; overflow: hidden;
+}
+
+/* 빈 상태 드롭존 */
+.dropzone {
+  width: min(560px, 80%); aspect-ratio: 4 / 3;
+  border: 2px dashed var(--line); border-radius: 16px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: border-color .15s, background .15s;
+}
+.dropzone:hover, .dropzone.drag { border-color: var(--accent); background: rgba(91,140,255,.06); }
+.dropzone-inner { text-align: center; color: var(--muted); }
+.dropzone-icon { font-size: 40px; margin-bottom: 12px; }
+.dropzone-title { font-size: 18px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+.dropzone-sub { font-size: 13px; }
+
+/* 편집 스테이지 */
+.stage { position: relative; box-shadow: 0 4px 24px rgba(0,0,0,.4); }
+.stage-img { display: block; width: 100%; height: 100%; user-select: none; -webkit-user-drag: none; }
+.overlay { position: absolute; inset: 0; }
+
+/* ---- 텍스트 박스 ---- */
+.text-box {
+  position: absolute;
+  white-space: pre;
+  line-height: 1.2;
+  text-align: center;
+  cursor: move;
+  user-select: none;
+  padding: 2px 6px;
+}
+.text-box.selected { outline: 1px dashed rgba(255,255,255,.9); outline-offset: 2px; }
+.tb-text { outline: none; min-width: 8px; }
+.tb-text.empty::before { content: attr(data-placeholder); opacity: 0.5; pointer-events: none; }
+.text-box.selected .tb-text { user-select: text; }
+
+.tb-handle {
+  position: absolute; width: 22px; height: 22px; border-radius: 50%;
+  border: 1.5px solid #fff; background: var(--accent); color: #fff;
+  display: none; align-items: center; justify-content: center;
+  font-size: 13px; line-height: 1; cursor: pointer; padding: 0;
+  box-shadow: 0 1px 4px rgba(0,0,0,.35);
+}
+.text-box.selected .tb-handle { display: flex; }
+.tb-del    { top: 0; left: 0;  transform: translate(-50%, -50%); background: #ff5c5c; }
+.tb-move { top: 0; right: 0; transform: translate(50%, -50%); cursor: move; }
+.tb-move svg { display: block; }
+.tb-resize { bottom: 0; right: 0; transform: translate(50%, 50%); cursor: nwse-resize; }
+.tb-resize::before { content: "⤡"; font-size: 13px; }
+
+/* ---- 오른쪽 패널 ---- */
+.panel {
+  flex: 0 0 280px; background: var(--panel-bg); border-left: 1px solid var(--line);
+  display: flex; flex-direction: column; overflow-y: auto;
+}
+.panel-section { padding: 16px; }
+.panel-title { font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+
+.panel-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.panel-head .panel-title { margin-bottom: 0; }
+.add-btn {
+  display: flex; align-items: center; gap: 5px;
+  padding: 5px 12px; border-radius: 8px;
+  border: 1px solid var(--line); background: #2f3038; color: var(--text);
+  font-size: 13px; font-weight: 600; line-height: 1; cursor: pointer;
+}
+.add-btn .plus { font-size: 16px; }
+.add-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+.panel-apply { display: flex; gap: 10px; }
+.bar-btn {
+  flex: 1; padding: 10px; border-radius: 8px;
+  background: #2f3038; color: var(--text); border: 1px solid var(--line);
+  font-size: 14px; font-weight: 600; cursor: pointer;
+}
+.bar-btn:not(:disabled):hover { border-color: var(--accent); }
+.bar-btn:disabled { color: var(--disabled); cursor: default; }
+#apply-btn:not(:disabled) { background: #4b4d5f; } /* 적용 활성 시에만 */
+
+.font-list { display: flex; flex-direction: column; gap: 8px; }
+.font-item {
+  background: #2f3038; border: 1px solid var(--line); border-radius: 10px;
+  padding: 10px 14px; cursor: pointer; text-align: left; color: var(--text);
+  display: flex; align-items: baseline; justify-content: space-between; gap: 8px;
+}
+.font-item:hover { border-color: var(--accent); }
+.font-item.active { border-color: var(--accent); background: #333a4d; box-shadow: 0 0 0 2px rgba(91,140,255,.3); }
+.font-preview { font-size: 22px; line-height: 1.1; }
+.font-name { font-family: -apple-system, sans-serif; font-size: 11px; color: var(--muted); flex: 0 0 auto; }
+
+.color-row { display: flex; gap: 10px; align-items: center; }
+.swatch {
+  width: 34px; height: 34px; border-radius: 8px; border: 2px solid var(--line);
+  cursor: pointer; padding: 0; position: relative;
+}
+.swatch.active { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(91,140,255,.3); }
+.rgb-swatch {
+  overflow: hidden;
+  background: conic-gradient(red, yellow, lime, aqua, blue, magenta, red);
+}
+.rgb-swatch input[type="color"] {
+  position: absolute; inset: -4px; width: calc(100% + 8px); height: calc(100% + 8px);
+  border: none; background: transparent; cursor: pointer; opacity: 0;
+}

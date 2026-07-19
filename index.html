@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>레터링 편집기</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="toolbar">
+    <div class="logo" id="logo">레터링 편집기</div>
+    <div class="toolbar-actions">
+      <button class="btn-secondary" id="load-btn">이미지 불러오기</button>
+      <button class="btn-download" id="download-btn">다운로드</button>
+    </div>
+  </header>
+
+  <main class="workspace">
+    <section class="canvas-area" id="canvas-area">
+      <!-- 빈 상태: 사진 불러오기 -->
+      <div class="dropzone" id="dropzone">
+        <div class="dropzone-inner">
+          <div class="dropzone-icon">📷</div>
+          <div class="dropzone-title">사진 불러오기</div>
+          <div class="dropzone-sub">클릭하거나 이미지를 여기로 끌어다 놓으세요</div>
+        </div>
+      </div>
+      <!-- 편집 스테이지: 사진 로드 후 -->
+      <div class="stage" id="stage" hidden>
+        <img class="stage-img" id="stage-img" alt="">
+        <div class="overlay" id="overlay"></div>
+      </div>
+    </section>
+
+    <aside class="panel">
+      <div class="panel-section">
+        <div class="panel-head">
+          <h2 class="panel-title">글자</h2>
+          <button class="add-btn" id="add-text-btn" title="텍스트 추가" aria-label="텍스트 추가"><span class="plus">+</span>입력하기</button>
+        </div>
+        <div class="font-list" id="font-list"></div>
+      </div>
+      <div class="panel-section">
+        <h2 class="panel-title">컬러</h2>
+        <div class="color-row" id="color-row"></div>
+      </div>
+      <div class="panel-section panel-apply" id="apply-bar">
+        <button class="bar-btn" id="cancel-btn">취소</button>
+        <button class="bar-btn" id="apply-btn">적용</button>
+      </div>
+    </aside>
+  </main>
+
+  <input type="file" id="file-input" accept="image/*" hidden>
+  <input type="color" id="rgb-input" value="#ffffff">
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
