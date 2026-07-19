@@ -135,7 +135,7 @@ body {
 }
 .font-item:hover { border-color: var(--accent); }
 .font-item.active { border-color: var(--accent); background: #333a4d; box-shadow: 0 0 0 2px rgba(91,140,255,.3); }
-.font-preview { font-size: 22px; line-height: 1.1; }
+.font-preview { font-size: 18px; line-height: 1.1; }
 .font-name { font-family: -apple-system, sans-serif; font-size: 11px; color: var(--muted); flex: 0 0 auto; }
 
 .color-row { display: flex; gap: 10px; align-items: center; }
